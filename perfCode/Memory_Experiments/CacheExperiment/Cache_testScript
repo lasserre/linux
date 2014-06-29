@@ -1,0 +1,30 @@
+#!/bin/bash
+
+NUM_RUNS_EACH=$1
+NUM_MIGRATIONS=$2
+
+echo "---------"
+echo "OPTIONS |"
+echo "------------------------------------------"
+echo "Number of runs: " $NUM_RUNS_EACH
+echo "Number of migrations/run: " $NUM_MIGRATIONS
+echo "------------------------------------------"
+initialTime=$(date)
+echo "Current timestamp: "$initialTime
+echo "--------------------------"
+
+for (( i=1; i<=$NUM_RUNS_EACH; i++ ))
+do
+	echo "Starting core2core and proc2proc experiment run #"$i"..."
+	./CacheMemoryExperiment $NUM_MIGRATIONS c
+	./CacheMemoryExperiment $NUM_MIGRATIONS p
+	echo "Completed!"
+done
+
+endTime=$(date)
+
+echo "----------"
+echo "SUMMARY |"
+echo "------------------------------------------"
+echo "Start time: "$initialTime
+echo "End time: "$endTime
