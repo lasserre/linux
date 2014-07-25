@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# perf stat -x , -o perfStat.out --append -r 100 ./simple_workload 100 65
+
+NUM_RUNS=$1
+PERF_OUT_FILE=perfStat.out
+OUT_FILE=ICExperiment.csv
+
+echo "---------"
+echo "OPTIONS |"
+echo "--------------------------------------------------"
+echo "Number of runs: " $NUM_RUNS
+echo "Perf output file: " $PERF_OUT_FILE
+echo "IC Experiment output file: " $OUT_FILE
+echo "--------------------------------------------------"
+initialTime=$(date)
+echo "Current timestamp: "$initialTime
+echo "--------------------------"
+
+X=65
+NUM_FACT_RUNS=100
+
+echo ""
+echo "Workload calculates the factorial of " $X " " $NUM_FACT_RUNS " times"
+
+for (( i=1; i<=$NUM_RUNS; i++ ))
+do
+	echo "Starting batch job #"$i" of "$NUM_RUNS" (running 100 IC experiment runs per batch)"
+	perf stat -x , -o $PERF_OUT_FILE --append -r 100 ./simple_workload $NUM_FACT_RUNS $X
+	echo "Completed!"
+done
+
+echo "Gathering instruction results..."
+cat $PERF_OUT_FILE | grep instruction > $OUT_FILE
+echo "Written to " $OUT_FILE
+
+endTime=$(date)
+
+echo "----------"
+echo "SUMMARY |"
+echo "------------------------------------------"
+echo "Start time: "$initialTime
+echo "End time: "$endTime

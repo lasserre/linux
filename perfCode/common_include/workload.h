@@ -3,6 +3,8 @@
 
 #include "experimentDebug.h"
 
+using namespace std;
+
 namespace Workload
 {    
     //// Variables
@@ -23,6 +25,13 @@ namespace Workload
         LOG_DEBUG(DEBUG_EXP_OUTPUT, "\tPerforming merge sort on " << SIZE << " items..." << endl)
         CallMergeSort();        
         return;
+    }
+
+    void DoFactorial(const int& Number)
+    {
+        LOG_DEBUG(DEBUG_EXP_OUTPUT, "\tCalculating " << Number << "! ..." << endl)
+        int NumFact = factor(Number);
+        LOG_DEBUG(DEBUG_EXP_OUTPUT, "\t" << Number << "! = " << NumFact << endl)
     }
     // ------------------------------------------------------------------- //
     // ------------------------------------------------------------------- //
